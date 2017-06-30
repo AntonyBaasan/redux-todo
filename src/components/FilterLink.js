@@ -6,7 +6,7 @@ const FilterLink = ({ filter, match, isActive, children }) => (
 
   <NavLink
     to={filter === 'all' ? '' : filter}
-    isActive={() => (match.params.filter === filter)}
+    isActive={() => (match.params.filter === (filter === 'all' ? '' : filter))}
     activeStyle={{
       fontWeight: 'bold',
       color: 'red',
