@@ -20,6 +20,18 @@ const addLoggingToDispatch = (store) => {
   };
 };
 
+const addPromiseSupportDispatch = (store) => {
+  const rawDispatch = store.dispatch;
+
+  return (action) => {
+    if (typeof action.then === 'function') {
+      return action.then(rawDispatch);
+    }
+
+    return rawDispatch(action);
+  };
+};
+
 export const configureStore = () => {
   const store = createStore(
     todoApp
@@ -28,6 +40,8 @@ export const configureStore = () => {
   if (process.env.NODE_ENV !== 'production') {
     store.dispatch = addLoggingToDispatch(store);
   }
+
+  store.dispatch = addPromiseSupportDispatch(store);
 
   return store;
 };
